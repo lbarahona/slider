@@ -1,0 +1,34 @@
+#slider-nav a {
+	padding: 1em;
+	margin-right: 1em;
+	border-radius: 10px;
+	cursor: pointer;
+}
+
+.slider {
+	width: 600px;
+	height: 300px;
+	overflow: hidden;
+}
+
+.slider .innerSlider {
+	width: 10000px;
+	height: 300px;
+	background: #666;
+}
+
+.slider .slide {
+	float: left;
+	position: relative;
+}
+
+.slide .textBox{
+	width: 600px;
+	height: 50px;
+	background: black;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	color: white;
+
+}

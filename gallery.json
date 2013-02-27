@@ -1,0 +1,22 @@
+[
+	{
+		"image": "http://lorempixel.com/600/300/sports",
+		"title": "img1 title",
+		"description": "test description for img1"
+	},
+	{
+		"image": "http://lorempixel.com/600/300/animals",
+		"title": "img2 title",
+		"description": "test description for img2"
+	},
+	{
+		"image": "http://lorempixel.com/600/300/people",
+		"title": "img3 title",
+		"description": "test description for img3"
+	},
+	{
+		"image": "http://lorempixel.com/600/300/transport",
+		"title": "img4 title",
+		"description": "test description for img4"
+	}
+]

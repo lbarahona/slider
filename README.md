@@ -1,2 +1,2 @@
-slider
-======
+Jquery Slider Plugin
+====================

@@ -1,27 +1,94 @@
-function Slider( container, nav ) {
-	this.container = container;
-	this.nav = nav.show();
+(function($){
 
-	this.imgs = this.container.find('img');
-	this.imgWidth = this.imgs[0].width; // 600
-	this.imgsLen = this.imgs.length;
+	$.fn.slider = function(options) {
 
-	this.current = 0;
-}
+		var base = this;
+		var next = $(".slider-nav-next");
+		var prev = $(".slider-nav-prev");
+		var x;
 
-Slider.prototype.transition = function( coords ) {
-	this.container.animate({
-		'margin-left': coords || -( this.current * this.imgWidth )
-	});
-};
+		base.options = options;
 
-Slider.prototype.setCurrent = function( dir ) {
-	var pos = this.current;
+		base.init = function(){
 
-	pos += ( ~~( dir === 'next' ) || -1 );
-	this.current = ( pos < 0 ) ? this.imgsLen - 1 : pos % this.imgsLen;
+			base.options = $.extend({},$.fn.slider.defaults,options);
+			console.log("init");
+			$.getJSON('gallery.json', function(data) {
+			  	
+			  	$.each(data, function(key, val) {
+				  	var elem = $('<div></div>');
+				  	elem.addClass('slide').addClass('slide-'+(key + 1));
 
-	return pos;
-};
+				  	elem.append( $('<img src="' + data[key].image + '" />') );
+
+				  	elem.append($('<div></div>').addClass('textBox'));
+				  	elem.find('.textBox').append('<p>' + data[key].title + '</p>');
+				  	elem.find('.textBox').append('<p>' + data[key].description + '</p>');
+
+				  	base.find(".innerSlider").append(elem);
+			  	});
+			 
+			});
+
+			base.autoPlayFn = function(){
+
+				x = setTimeout(function(){
+					base.triggerAutoPlay();
+				}, base.options.slideTime);
+			};
+
+			if(base.options.autoPlay){
+				base.autoPlayFn();
+			}
+
+			base.triggerAutoPlay = function(){
+
+				next.trigger('click');
+				base.autoPlayFn();
+
+			};
+			
+			next.on("click",function(){
+
+				var tempSlide = $('.innerSlider').children(':first').clone();
+				//console.log(tempSlide);
+				$('.innerSlider').children(':first').next().stop(1,1).animate({"margin-left": "-600px" }, base.options.speed, function(){
+					$(this).css({"margin-left":"0px"});
+					$('.innerSlider').children(':first').remove();
+				});
+				$('.innerSlider').append(tempSlide);
 
 
+			});
+
+			prev.on("click",function(){
+				clearInterval(x);
+				// base.autoPlayFn();
+				
+				$('.innerSlider').children(':last').css({"margin-left":"-600px"});
+				var tempSlide = $('.innerSlider').children(':last').clone();
+				$('.innerSlider').prepend(tempSlide);
+				$('.innerSlider').children(':last').remove();
+				$('.innerSlider').children(':first').stop(1,1).animate({"margin-left": "0px" }, base.options.speed);
+
+			});
+
+			next.add(prev).add('.innerSlider').mouseenter(function(){
+				clearInterval(x);
+			}).mouseleave(function(){
+				base.autoPlayFn();
+			});
+
+		};//end init method
+
+
+		base.init();
+	};
+
+	$.fn.slider.defaults = {
+		speed: 500,
+		slideTime: 3000,
+		autoPlay: true
+	};
+
+})(jQuery);

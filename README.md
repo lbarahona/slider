@@ -1,2 +1,39 @@
 Jquery Slider Plugin
 ====================
+
+Basic Plugin Structure
+======================
+
+<!doctype html>
+<html>
+<head>
+  <meta charset=utf-8>
+	<title>JQuery Slider example</title>
+
+	<title>Slider example</title>
+	<link rel="stylesheet" href="slider.css">
+</head>
+<body>
+
+<div class="slider">
+	<div class="innerSlider">
+
+	</div>
+</div>
+
+<div id="slider-nav">
+	<a class="slider-nav-prev" href="#">Prev</a>
+	<a class="slider-nav-next" href="#">Next</a>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="slider.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$('.slider').slider({
+		speed: 1000,
+		slideTime: 3000
+	});
+</script>
+
+</body>
+</html>
